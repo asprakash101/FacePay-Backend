@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class MLService {
 
-    final private String MLServerURL = new String("ML server URL");
+    final private String MLServerURL = new String("http://127.0.0.1:9000");
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -44,30 +44,32 @@ public class MLService {
     public ResponseEntity trainUserData(String userID, String userName) {
 
         ResponseEntity response = null;
-        String reqBody = "{\"userID\":\""+userID+"\",\"userName\":\""+userName+"\"}";
-        String result = restTemplate.getForObject(MLServerURL+"/trainUser/"+userID+"/"+userName,String.class,reqBody);
-//        String result = restTemplate.getForObject("http://10.71.33.242:9034/nps/rest/customfiles/config", String.class);
-//        String result = new String("{\"name\":\"John\"}");
-        JSONObject jsonResponse = null;
+        // response = new ResponseEntity("Successfully Trained User Data", HttpStatus.OK);
+        // return response;
+        String reqBody = "{\"user_id\":\""+userID+"\",\"user_name\":\""+userName+"\"}";
+        String result = restTemplate.postForObject(MLServerURL + "/train?user_id="+userID,"",String.class);
+// //        String result = restTemplate.getForObject("http://10.71.33.242:9034/nps/rest/customfiles/config", String.class);
+// //        String result = new String("{\"name\":\"John\"}");
+//         JSONObject jsonResponse = null;
+        return new ResponseEntity(result, HttpStatus.OK);
+//         try {
+//             jsonResponse = new JSONObject(result);
+//             String value = jsonResponse.getString("name");
+//             if(result != null && result.equalsIgnoreCase("success")){
+//                 response = new ResponseEntity("Successfully Trained User Data", HttpStatus.OK);
+//             }
+//             else {
+//                 response = new ResponseEntity("Failed To Train User Data Into The System", HttpStatus.OK);
+//             }
+//         } catch (JSONException e) {
+//             log.error("Error while converting user .pkl data to JSON: " + e.getMessage());
+//             response = new ResponseEntity("Failed To Train User Data Into The System", HttpStatus.INTERNAL_SERVER_ERROR);
+//         }
+//         finally {
 
-        try {
-            jsonResponse = new JSONObject(result);
-            String value = jsonResponse.getString("name");
-            if(result != null && result.equalsIgnoreCase("success")){
-                response = new ResponseEntity("Successfully Trained User Data", HttpStatus.OK);
-            }
-            else {
-                response = new ResponseEntity("Failed To Train User Data Into The System", HttpStatus.OK);
-            }
-        } catch (JSONException e) {
-            log.error("Error while converting user .pkl data to JSON: " + e.getMessage());
-            response = new ResponseEntity("Failed To Train User Data Into The System", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        finally {
+//             return response;
 
-            return response;
-
-        }
+//         }
 
     }
 }
