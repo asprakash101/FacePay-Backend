@@ -20,8 +20,8 @@ public class MLController {
 
     @Autowired
     private MLService mlService;
-    @PostMapping(value = "/tuduidun/{userID}/{userName}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity trainUser(@PathVariable("userID") String userID, @PathVariable("userName") String userName) {
+    @PostMapping(value = "/tuduidun", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity trainUser(@RequestParam("userID") String userID, @RequestParam("userName") String userName) {
 
         return mlService.trainUserData(userID, userName);
 
