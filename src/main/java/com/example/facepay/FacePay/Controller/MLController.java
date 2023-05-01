@@ -1,12 +1,8 @@
 package com.example.facepay.FacePay.Controller;
 
 import com.example.facepay.FacePay.Service.MLService;
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
