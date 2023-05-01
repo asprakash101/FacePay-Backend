@@ -81,7 +81,7 @@ public class UIService {
         return response;
     }
 
-    public ResponseEntity<UIResponse> topup(Topup topup) {
+    public ResponseEntity<UIResponse> updateBal(Topup topup) {
 
         log.info("Entering updateBal function");
         User user = userRepository.findByUserID(topup.getUserID());

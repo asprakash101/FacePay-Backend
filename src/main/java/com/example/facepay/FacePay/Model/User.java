@@ -20,6 +20,7 @@ public class User {
     String phone;
     String password;
     double balance;
+    Integer flag;
 
 
 }

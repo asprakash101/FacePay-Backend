@@ -32,7 +32,7 @@ public class UIController {
 
     @PostMapping("/updateBal")
     public ResponseEntity<UIResponse> topup(@RequestBody Topup topup) {
-        return uiService.topup(topup);
+        return uiService.updateBal(topup);
     }
 
     @GetMapping("/details")
