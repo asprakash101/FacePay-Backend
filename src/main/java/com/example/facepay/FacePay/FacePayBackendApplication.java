@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-@SpringBootApplication@EnableMongoRepositories(basePackageClasses = UserRepository.class)
+@SpringBootApplication
+@EnableMongoRepositories(basePackageClasses = UserRepository.class)
 public class FacePayBackendApplication {
 
 	@Bean

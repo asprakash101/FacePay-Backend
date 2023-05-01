@@ -1,5 +1,6 @@
 package com.example.facepay.FacePay.Controller;
 
+import com.example.facepay.FacePay.Model.Topup;
 import com.example.facepay.FacePay.Model.User;
 import com.example.facepay.FacePay.Service.UIService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,5 +30,10 @@ public class UIController {
     @GetMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         return uiService.login(user);
+    }
+
+    @PostMapping("/topup")
+    public ResponseEntity<String> topup(@RequestBody Topup topup) {
+        return uiService.topup(topup);
     }
 }

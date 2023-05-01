@@ -10,16 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Topup {
 
     @Id
     String userID;
-    String fullName;
-    String email;
-    String userName;
     String phone;
-    String password;
-    double balance;
-
-
+    double amount;
 }

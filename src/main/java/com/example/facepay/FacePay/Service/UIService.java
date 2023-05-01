@@ -1,5 +1,6 @@
 package com.example.facepay.FacePay.Service;
 
+import com.example.facepay.FacePay.Model.Topup;
 import com.example.facepay.FacePay.Model.User;
 import com.example.facepay.FacePay.Repository.UserRepository;
 import com.mongodb.ConnectionString;
@@ -61,4 +62,19 @@ public class UIService {
         }
         return response;
     }
+
+    public ResponseEntity<String> topup(Topup topup) {
+
+        User user = userRepository.findByUserID(topup.getUserID());
+        if(user != null){
+            user.setBalance(user.getBalance() + topup.getAmount());
+            userRepository.save(user);
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        }
+        else{
+            log.error("User not found");
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

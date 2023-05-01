@@ -22,11 +22,6 @@ public class MLService {
 
     final private String MLServerURL = new String("http://127.0.0.1:9000");
 
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.build();
-    }
-
     @Lazy
     @Autowired
     RestTemplate restTemplate;
