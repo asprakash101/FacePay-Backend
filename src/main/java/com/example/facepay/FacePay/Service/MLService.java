@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class MLService {
 
-    final private String MLServerURL = new String("http://127.0.0.1:9000");
+    final private String MLServerURL = new String("http://127.0.0.1:5000");
 
     @Lazy
     @Autowired
@@ -36,13 +36,13 @@ public class MLService {
             .build();
 
 
-    public ResponseEntity trainUserData(String userID, String userName) {
+    public ResponseEntity trainUserData(String userID) {
 
         ResponseEntity response = null;
         // response = new ResponseEntity("Successfully Trained User Data", HttpStatus.OK);
         // return response;
-        String reqBody = "{\"user_id\":\""+userID+"\",\"user_name\":\""+userName+"\"}";
-        String result = restTemplate.postForObject(MLServerURL + "/train?user_id="+userID,"",String.class);
+        String reqBody = "{\"user_id\":\""+userID+"\"}";
+        String result = restTemplate.postForObject(MLServerURL + "/train-server/train?user_id="+userID,"",String.class);
 // //        String result = restTemplate.getForObject("http://10.71.33.242:9034/nps/rest/customfiles/config", String.class);
 // //        String result = new String("{\"name\":\"John\"}");
 //         JSONObject jsonResponse = null;

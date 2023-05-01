@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/b2ms")
+@RequestMapping("/api")
 @Slf4j
 public class MLController {
 
@@ -25,10 +25,10 @@ public class MLController {
 
     @Autowired
     private MLService mlService;
-    @PostMapping(value = "/tuduidun", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity trainUser(@RequestParam("userID") String userID, @RequestParam("userName") String userName) {
+    @PostMapping(value = "/trainUser", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity trainUser(@RequestParam("userID") String userID) {
         
-        return mlService.trainUserData(userID, userName);
+        return mlService.trainUserData(userID);
 
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/b2ui")
+@RequestMapping("/facepay")
 @Slf4j
 public class UIController {
 
@@ -32,8 +32,11 @@ public class UIController {
         return uiService.login(user);
     }
 
-    @PostMapping("/topup")
+    @PostMapping("/updateBal")
     public ResponseEntity<String> topup(@RequestBody Topup topup) {
         return uiService.topup(topup);
     }
+
+
+
 }
