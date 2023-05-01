@@ -7,7 +7,7 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
-@Document(collation = "images")
+@Document(collection = "images")
 @Data
 public class Image {
 

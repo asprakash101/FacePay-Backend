@@ -14,8 +14,10 @@ configurations {
 	}
 }
 
+
 repositories {
 	mavenCentral()
+
 }
 
 dependencies {

@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://usn012y2018:facepay1@facepay.y1chyja.mongodb.net/test
+      database: facepay

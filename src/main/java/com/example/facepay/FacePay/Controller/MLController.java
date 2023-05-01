@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/b2ms")
 @Slf4j
 public class MLController {
-    @Bean
-    MongoMappingContext springDataMongoMappingContext() {
-        return new MongoMappingContext();
-    }
 
     @Autowired
     private MLService mlService;
