@@ -3,6 +3,7 @@ package com.example.facepay.FacePay.Service;
 import com.example.facepay.FacePay.Model.Topup;
 import com.example.facepay.FacePay.Model.User;
 import com.example.facepay.FacePay.Repository.UserRepository;
+import com.example.facepay.FacePay.Response.UIResponse;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -37,44 +38,87 @@ public class UIService {
             .serverApi(serverApi)
             .build();
 
-    public String register(User user) {
-
+    public UIResponse register(User user) {
+        log.info("Insider Register");
+        User userCheck = userRepository.findByEmail(user.getEmail());
+        if (userCheck != null) {
+            log.warn("User already exists.");
+            return new UIResponse(-1, "Email ID already exists for a user.");
+        }
         User userResponse = userRepository.save(user);
-        return userResponse.getUserID();
+        UIResponse response = null;
+        if (userResponse != null) {
+            log.info("New user created");
+            response = new UIResponse(1, "Successfully added a new user.");
+        } else {
+            log.warn("failed to create a new user");
+            response = new UIResponse(-1, "Failed to Create a new user.");
+        }
+        log.info("Exiting register function.");
+        return response;
     }
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public ResponseEntity<String> login(User userLogin) {
+    public ResponseEntity<UIResponse> login(User userLogin) {
 
+        log.info("Entered login function");
         User user = userRepository.findByEmail(userLogin.getEmail());
-        ResponseEntity<String> response = null;
-        if(user != null) {
-            if(user.getPassword().equals(userLogin.getPassword()))
-                response = new ResponseEntity<>("success", HttpStatus.OK);
-            else
-                response = new ResponseEntity<>("Password Incorrect", HttpStatus.UNAUTHORIZED);
+        ResponseEntity<UIResponse> response = null;
+        if (user != null) {
+            if (user.getPassword().equals(userLogin.getPassword())) {
+                log.info("Login successful");
+                response = new ResponseEntity<>(new UIResponse(1, "Login Successful"), HttpStatus.OK);
+            } else {
+                log.warn("Incorrect Password");
+                response = new ResponseEntity<>(new UIResponse(-1, "Incorrect Password"), HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            log.warn("User not found");
+            response = new ResponseEntity<>(new UIResponse(-1, "User not found"), HttpStatus.NOT_FOUND);
         }
-        else {
-            response = new ResponseEntity<>("email not found", HttpStatus.NOT_FOUND);
-        }
+        log.info("Exiting login function");
         return response;
     }
 
-    public ResponseEntity<String> topup(Topup topup) {
+    public ResponseEntity<UIResponse> topup(Topup topup) {
 
+        log.info("Entering updateBal function");
         User user = userRepository.findByUserID(topup.getUserID());
-        if(user != null){
+        if (user != null) {
+            log.info("Updating Bal");
             user.setBalance(user.getBalance() + topup.getAmount());
             userRepository.save(user);
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        }
-        else{
+            log.info("Exiting updateBal");
+            return new ResponseEntity<>(new UIResponse(1, "Balance updated Successfully"), HttpStatus.OK);
+        } else {
             log.error("User not found");
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            log.info("Exiting updateBal");
+            return new ResponseEntity<>(new UIResponse(-1, "User Not Found."), HttpStatus.NOT_FOUND);
         }
     }
 
+    public ResponseEntity<User> getDetails(String email) {
+        log.info("Entering getDetails");
+        User user = userRepository.findByEmail(email);
+        User response = null;
+        if(user != null) {
+            log.info("User found");
+            response = new User();
+            response.setFullName(user.getFullName());
+            response.setEmail(user.getEmail());
+            response.setUserName(user.getUserName());
+            response.setPhone(user.getPhone());
+            response.setUserID(user.getUserID());
+            response.setBalance(user.getBalance());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        else {
+            log.warn("User does not exist");
+            log.info("Exiting getDetails");
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+        }
+    }
 }

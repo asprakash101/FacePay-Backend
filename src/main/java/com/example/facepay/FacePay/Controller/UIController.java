@@ -2,6 +2,7 @@ package com.example.facepay.FacePay.Controller;
 
 import com.example.facepay.FacePay.Model.Topup;
 import com.example.facepay.FacePay.Model.User;
+import com.example.facepay.FacePay.Response.UIResponse;
 import com.example.facepay.FacePay.Service.UIService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +22,25 @@ public class UIController {
     UIService uiService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        String userID = uiService.register(user);
-        ResponseEntity<String> responseEntity = new ResponseEntity<>(userID, HttpStatus.OK);
+    public ResponseEntity<UIResponse> register(@RequestBody User user) {
+        UIResponse response = uiService.register(user);
+        ResponseEntity<UIResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
         return responseEntity;
     }
 
     @GetMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user) {
+    public ResponseEntity<UIResponse> login(@RequestBody User user) {
         return uiService.login(user);
     }
 
     @PostMapping("/updateBal")
-    public ResponseEntity<String> topup(@RequestBody Topup topup) {
+    public ResponseEntity<UIResponse> topup(@RequestBody Topup topup) {
         return uiService.topup(topup);
     }
 
-
+    @GetMapping("/details")
+    public ResponseEntity<User> getDetails(@RequestBody String email) {
+        return uiService.getDetails(email);
+    }
 
 }
