@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/facepay")
 @Slf4j
@@ -25,7 +26,7 @@ public class UIController {
         return responseEntity;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UIResponse> login(@RequestBody User user) {
         return uiService.login(user);
     }
@@ -36,7 +37,7 @@ public class UIController {
     }
 
     @GetMapping("/details")
-    public ResponseEntity<User> getDetails(@RequestBody String email) {
+    public ResponseEntity<User> getDetails(@RequestParam(value = "email") String email) {
         return uiService.getDetails(email);
     }
 
