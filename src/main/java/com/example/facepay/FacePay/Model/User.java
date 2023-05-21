@@ -21,6 +21,7 @@ public class User {
     String password;
     Double balance;
     Integer flag;
+    Integer status;
 
 
 }
