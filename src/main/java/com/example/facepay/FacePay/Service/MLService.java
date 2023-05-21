@@ -89,12 +89,14 @@ public class MLService {
             balance = user.getBalance();
             if(balance < minBalance){
                 log.error("Balance is below minimum balance");
-                throw new Exception("Minimum Balance Exception");
+                user.setStatus(-1);
+                return new ResponseEntity<>(user, HttpStatus.OK);
             }
             flag = user.getFlag();
             if(flag == null || flag == 0) {
                 log.info("User entry at station: " + stationID);
                 user.setFlag(stationID);
+                user.setStatus(1);
             }
             else {
                 log.info("User exit at station: " + stationID);
@@ -102,6 +104,7 @@ public class MLService {
                 topup = new Topup(user.getUserID(),user.getPhone(),fare*-1);
                 user = mlUtil.updateBal(topup);
                 user.setFlag(null);
+                user.setStatus(1);
             }
             User response = userRepository.save(user);
             return new ResponseEntity<>(response, HttpStatus.OK);
