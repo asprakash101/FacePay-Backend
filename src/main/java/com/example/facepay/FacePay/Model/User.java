@@ -19,7 +19,7 @@ public class User {
     String userName;
     String phone;
     String password;
-    double balance;
+    Double balance;
     Integer flag;
 
 

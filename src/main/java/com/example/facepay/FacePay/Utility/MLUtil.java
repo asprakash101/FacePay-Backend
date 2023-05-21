@@ -3,11 +3,8 @@ package com.example.facepay.FacePay.Utility;
 import com.example.facepay.FacePay.Model.Topup;
 import com.example.facepay.FacePay.Model.User;
 import com.example.facepay.FacePay.Repository.UserRepository;
-import com.example.facepay.FacePay.Response.UIResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,7 +16,15 @@ public class MLUtil {
 
     public int calcFare(Integer flag, Integer stationID) {
 
-        return 35;
+//        return 35;
+        int baseFare = 10;
+        int totalFare = 0;
+        totalFare = flag - stationID;
+        if(totalFare<0){
+            totalFare = totalFare*-1;
+        }
+
+        return totalFare + baseFare;
     }
 
     public User updateBal(Topup topup) {

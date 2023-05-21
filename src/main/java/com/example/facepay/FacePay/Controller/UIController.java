@@ -13,19 +13,21 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/facepay")
 @Slf4j
+@CrossOrigin
 public class UIController {
 
     @Autowired
     UIService uiService;
 
     @PostMapping("/register")
+    @CrossOrigin
     public ResponseEntity<UIResponse> register(@RequestBody User user) {
         UIResponse response = uiService.register(user);
         ResponseEntity<UIResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
         return responseEntity;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UIResponse> login(@RequestBody User user) {
         return uiService.login(user);
     }
@@ -36,7 +38,7 @@ public class UIController {
     }
 
     @GetMapping("/details")
-    public ResponseEntity<User> getDetails(@RequestBody String email) {
+    public ResponseEntity<User> getDetails(@RequestParam(value = "email") String email) {
         return uiService.getDetails(email);
     }
 

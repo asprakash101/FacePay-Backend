@@ -37,7 +37,7 @@ public class UIService {
             .build();
 
     public UIResponse register(User user) {
-        log.info("Insider Register");
+        log.info("Inside Register");
         User userCheck = userRepository.findByEmail(user.getEmail());
         if (userCheck != null) {
             log.warn("User already exists.");

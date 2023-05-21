@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class MLService {
 
-    final private String MLServerURL = new String("http://127.0.0.1:5000");
+    final private String MLServerURL = new String("http://192.168.137.143:5000");
     final private Double minBalance = 50.0;
 
     @Lazy
@@ -83,6 +83,7 @@ public class MLService {
         User user = userRepository.findByUserID(userID);
         Integer flag = null;
         Double balance = null;
+
         Topup topup = null;
         int fare = 0;
         if(user!=null){
@@ -93,17 +94,19 @@ public class MLService {
             }
             flag = user.getFlag();
             if(flag == null || flag == 0) {
-                log.info("User entry at station: " + stationID);
+                log.info("User " + userID+" entry at station: " + stationID + " with balance: " + user.getBalance());
                 user.setFlag(stationID);
             }
             else {
-                log.info("User exit at station: " + stationID);
+
                 fare = mlUtil.calcFare(flag, stationID);
                 topup = new Topup(user.getUserID(),user.getPhone(),fare*-1);
                 user = mlUtil.updateBal(topup);
                 user.setFlag(null);
+                log.info("User " + userID+" exit at station: " + stationID + " with balance: " + user.getBalance());
             }
             User response = userRepository.save(user);
+            response = userRepository.findByUserID(user.getUserID());
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         else {

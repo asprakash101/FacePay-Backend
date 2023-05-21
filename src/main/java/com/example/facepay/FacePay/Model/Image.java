@@ -1,9 +1,7 @@
 package com.example.facepay.FacePay.Model;
 
-import jakarta.persistence.Id;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,9 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 public class Image {
 
-    @Id
-    long id;
     MultipartFile img;
+    @Id
     String user_id;
 
 
