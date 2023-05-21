@@ -19,7 +19,7 @@ public class MLUtil {
 //        return 35;
         int baseFare = 10;
         int totalFare = 0;
-        totalFare = flag - stationID;
+        totalFare = (flag - stationID)*5;
         if(totalFare<0){
             totalFare = totalFare*-1;
         }
